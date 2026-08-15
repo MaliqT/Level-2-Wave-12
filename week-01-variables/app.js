@@ -23,13 +23,6 @@
 //
 // Log all four to the console.
 
-const fullName = "Jae Lee"; // My name will stay the same, therefore const is chosen as keyword
-let age = 29; // Age will change over time, let is chosen
-let city = "Boston"; // The city I live in might change, so let is chosen
-let isStudent = false; // I might choose to attend school and become a student, let is chosen
-
-console.log(fullName, age, city, isStudent);
-
 // ----------------------------------------------------------
 // TASK 2 — Update what can change
 // ----------------------------------------------------------
@@ -40,14 +33,6 @@ console.log(fullName, age, city, isStudent);
 // Then try to reassign fullName.
 // Read the error, then comment that line out.
 
-city = "New York City";
-isStudent = true;
-console.log(city, isStudent);
-
-// fullName = "John Adams";
-console.log(fullName);
-
-
 // ----------------------------------------------------------
 // TASK 3 — Undefined in the wild
 // ----------------------------------------------------------
@@ -57,12 +42,6 @@ console.log(fullName);
 // Now assign it a movie title.
 // Log it again.
 
-let favoriteMovie;
-console.log(favoriteMovie); //undefined
-
-favoriteMovie = "007 Casino";
-console.log(favoriteMovie);
- 
 // ----------------------------------------------------------
 // TASK 4 — Build a product listing
 // ----------------------------------------------------------
@@ -77,13 +56,6 @@ console.log(favoriteMovie);
 // Log each variable on its own line.
 // Then log: productName + " by " + productBrand + " — $" + productPrice
 
-const productName = "Fridge organizer";
-const productBrand = "Fridge Sweep";
-let productPrice = 49.99;
-let inStock = true;
-
-console.log(productName + " by " + productBrand + " — $" + productPrice);
-
 // ----------------------------------------------------------
 // TASK 5 — Stock status update
 // ----------------------------------------------------------
@@ -95,12 +67,6 @@ console.log(productName + " by " + productBrand + " — $" + productPrice);
 // Why did this fail but inStock worked?
 // Write your answer as a comment.
 
-inStock = false;
-console.log("In stock: " + inStock);
-
-// productName = "Apple Fridge"; //productName is a const variable, it can't be reassigned a different value and will error out
-// console.log(productName);
-
 // ----------------------------------------------------------
 // TASK 6 — Fix the bad names
 // ----------------------------------------------------------
@@ -111,13 +77,6 @@ console.log("In stock: " + inStock);
 //   my score      → fix it
 //   X             → rename to something descriptive, then declare it
 //   GaMeLeVeL     → fix the casing
-
-const secondPlayer = "John";
-let myScore = 89;
-let health = 100;
-let GameLevel = 2;
-
-console.log(secondPlayer, myScore, health, GameLevel);
 
 // ----------------------------------------------------------
 // TASK 7 — Two-step declaration
@@ -133,16 +92,6 @@ console.log(secondPlayer, myScore, health, GameLevel);
 //
 // You should see three console lines: undefined → 500 → 750
 
-let highscore;
-console.log(highscore);
-
-highscore = 500;
-console.log(highscore);
-
-highscore = 750;
-console.log(highscore);
-
-
 // ----------------------------------------------------------
 // TASK 8 — Connect the variables
 // ----------------------------------------------------------
@@ -153,12 +102,6 @@ console.log(highscore);
 //
 // Log: appName + " v" + version + " — built by " + authorName
 // Expected format: "TaskMaster v3 — built by [your name]"
-
-const appName = "TaskMaster";
-let version = 3;
-const authorName = "Jae";
-
-console.log(appName + " v" + version + " — built by " + authorName);
 
 // ----------------------------------------------------------
 // ⭐ STRETCH GOAL
@@ -172,11 +115,3 @@ console.log(appName + " v" + version + " — built by " + authorName);
 // Then reassign currentYear... wait, can you? Why not?
 // Write the answer as a comment.
 // What keyword would you need if currentYear could change?
-
-const startYear = 2020;
-const currentYear = 2025;
-let yearsRunning = currentYear - startYear;
-
-console.log(appName + " has been running for " + yearsRunning + " years.");
-
-// currentYear = 2026; //Errors out because currentYear is a const. Need to change to let variable instead.
