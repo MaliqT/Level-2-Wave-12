@@ -23,6 +23,14 @@
 //
 // Log all four to the console.
 
+const fullName = "Maliq Tepkhoom";  // Currently have no plans on changing my name in the near future. Name stays the same
+let age = 28;                       // use let for age since my age changes yearly
+const city = "Seattle";             // Not planning on moving anywhere anytime soon. City is constant
+const isStudent = true;             // Always a student, always learning, never stopping. Constant for me. 
+
+console.log(fullName, age, city, isStudent);
+
+
 // ----------------------------------------------------------
 // TASK 2 — Update what can change
 // ----------------------------------------------------------
@@ -33,6 +41,9 @@
 // Then try to reassign fullName.
 // Read the error, then comment that line out.
 
+//city = "Honolulu"
+//isStudent = false;  // Uncaught TypeError: Assignment to constant variable
+
 // ----------------------------------------------------------
 // TASK 3 — Undefined in the wild
 // ----------------------------------------------------------
@@ -41,6 +52,14 @@
 //
 // Now assign it a movie title.
 // Log it again.
+
+let favoriteMovie;
+
+console.log(favoriteMovie);     // undefined
+
+favoriteMovie = "Project Hail Mary"
+
+console.log(favoriteMovie);
 
 // ----------------------------------------------------------
 // TASK 4 — Build a product listing
@@ -56,6 +75,18 @@
 // Log each variable on its own line.
 // Then log: productName + " by " + productBrand + " — $" + productPrice
 
+const productName = "Soup";
+const productBrand = "SoupsOn";
+const productPrice = "9.99"
+const inStock = true;
+
+console.log(productName);
+console.log(productBrand);
+console.log(productPrice);
+console.log(inStock);
+
+console.log(productName + " by " + productBrand + " - $" + productPrice);
+
 // ----------------------------------------------------------
 // TASK 5 — Stock status update
 // ----------------------------------------------------------
@@ -67,6 +98,13 @@
 // Why did this fail but inStock worked?
 // Write your answer as a comment.
 
+//inStock = false;
+
+//console.log("In stock: " + inStock);
+
+//productName = "cereal";         //Trick question? reassignment of a const variable does not work. Uncaught TypeError: Assignment to constant variable app.js:101:9 so inStock did not work
+
+
 // ----------------------------------------------------------
 // TASK 6 — Fix the bad names
 // ----------------------------------------------------------
@@ -77,6 +115,11 @@
 //   my score      → fix it
 //   X             → rename to something descriptive, then declare it
 //   GaMeLeVeL     → fix the casing
+
+let secondPlayer = "Kirby";
+let myScore = 0;
+let changeInDistance = 5;
+let gameLevel = 2;
 
 // ----------------------------------------------------------
 // TASK 7 — Two-step declaration
@@ -92,6 +135,15 @@
 //
 // You should see three console lines: undefined → 500 → 750
 
+let highScore;
+console.log(highScore);
+
+highScore = 500;
+console.log(highScore);
+
+highScore = 750;
+console.log(highScore);
+
 // ----------------------------------------------------------
 // TASK 8 — Connect the variables
 // ----------------------------------------------------------
@@ -102,6 +154,12 @@
 //
 // Log: appName + " v" + version + " — built by " + authorName
 // Expected format: "TaskMaster v3 — built by [your name]"
+
+const appName = "TaskMaster";
+const version = 3;
+const authorName = "MaliqT";
+
+console.log(appName + " v" + version + " - built by " + authorName);
 
 // ----------------------------------------------------------
 // ⭐ STRETCH GOAL
@@ -115,3 +173,12 @@
 // Then reassign currentYear... wait, can you? Why not?
 // Write the answer as a comment.
 // What keyword would you need if currentYear could change?
+
+const startYear = 2020;
+const currentYear = 2025;
+let yearsRunning = currentYear - startYear;
+
+console.log(appName + " has been running for " + yearsRunning + " years.");
+
+// Cannot reassign currentYear since it is a const variable
+// declare currentYear as a let variable
