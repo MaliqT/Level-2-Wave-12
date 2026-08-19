@@ -343,3 +343,15 @@ console.log(`${fullReceipt}`);
 // d) Check if the customer's email domain is "pixelgadgets.com":
 //    const isInternalEmail = cleanEmail.endsWith("@pixelgadgets.com");
 //    Log: `Internal customer: ${isInternalEmail}`
+
+const totalItems = item1Qty + item2Qty + item3Qty;
+console.log(`Total items: ${totalItems}`)
+
+const highestPrice = Math.max(price1, price2, price3);
+console.log(`Highest price: $${highestPrice.toFixed(2)}`)
+
+const avgPrice = (price1 + price2 + price3) / 3;
+console.log(`Average price: $${avgPrice.toFixed(2)}`);
+
+const isInternalEmail = cleanCustomerEmail.endsWith("@pixelgadgets.com");
+console.log(`Internal customer: ${isInternalEmail}`);
