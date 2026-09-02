@@ -110,7 +110,7 @@ if (percentage >= 90) {
 //   ELSE                          → log studentName + " — FAILED ❌"
 
 if (earnedScore >= passingScore) {
-    console.log(`${studnetName} - PASSED`);
+    console.log(`${studentName} - PASSED`);
 } else {
     console.log(`${studentName} - FAILED`);
 }
@@ -162,7 +162,7 @@ const hasDisciplinaryNote = false;
 if (percentage >= honorRollThreshold && !hasDisciplinaryNote) {
     console.log(`${studentName} has made the Honor Roll!`);
 } else {
-    console.log(`${studnetName} did not qualify for Honor Roll.`);
+    console.log(`${studentName} did not qualify for Honor Roll.`);
 }
 
 // ----------------------------------------------------------
@@ -232,12 +232,14 @@ if (average >= 90) {
     console.log(`Grade: B`);
 } else if (average >= 70) {
     console.log(`Grade: C`);
+} else if (average >= 60) {
+    console.log(`Grade: D`);
 } else {
     console.log(`Grade: F`);
 }
 
 
-if (mathScore < 70 || scienceScore < 70 || englishScore < 70) {
+if (mathScore < 60 || scienceScore < 60 || englishScore < 60) {
     console.log(`⚠️ Warning: at least one subject needs attention`);
 } else {
     console.log(`✅ Passing all subjects. Good job.`);
