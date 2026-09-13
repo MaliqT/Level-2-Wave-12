@@ -15,15 +15,16 @@
 const prices = [29.99, 49.99, 14.99, 99.99];
 
 const withTax = prices.map(function(price) {
-  const taxed = price * 1.10;
-  console.log(taxed);
+  return (price * 1.10).toFixed(2);
 });
 
 console.log("With tax:", withTax);
 
 // What's wrong ↓
+// map is supposed to have a return value
 
 // Your fix ↓
+// return (price * 1.10).toFixed(2)
 
 
 // ----------------------------------------------------------
@@ -40,14 +41,17 @@ const orders = [
 ];
 
 const pending = orders.filter(function(order) {
-  return order.status = "pending";
+  return order.status === "pending";
 });
 
 console.log(pending);
 
 // What's wrong ↓
+// It returns an empty array because it's not checking for a boolean value and thus cannot return anything
+// order.status = "pending";
 
 // Your fix ↓
+// order.status === "pending";
 
 
 // ----------------------------------------------------------
@@ -65,14 +69,16 @@ const lineItems = [
 
 const orderTotal = lineItems.reduce(function(acc, item) {
   return acc + item.quantity * item.price;
-});
+}, 0);
 
-console.log("Order total: $" + orderTotal);
+console.log("Order total: $" + orderTotal.toFixed(2));
 
 // Bug 1 ↓
+// The first bug is because there is no initial value for acc in the reduce method.
 
 // Bug 2 ↓
-// Hint: run it and read the output carefully.
-// What is the value on the first iteration?
+// I guess the second bug is the notation of the value of orderTotal
 
 // Your fix ↓
+//}, 0); for line 72
+// orderTotal.toFixed(2) for line 74
