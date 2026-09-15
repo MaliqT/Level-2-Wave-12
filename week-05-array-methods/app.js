@@ -235,7 +235,7 @@ const allPriorityMultiItem = orders.filter(function (order) {
   return order.isPriority == true;
 })
 .every(function (order) {
-  return order.items >= 1;
+  return order.items > 1;
 });
 console.log(`All priority multi-item: ${allPriorityMultiItem}`);
 
