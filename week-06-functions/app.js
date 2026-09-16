@@ -236,6 +236,21 @@ console.log(teens.map(user => user.username));
 // Write a comment: what does passing isValidUser (without ())
 // to filter do differently than passing isValidUser()?
 
+function getAccountStats(userList) {
+  const totalLogins = userList.reduce((acc, user) => {
+    return acc + user.loginCount;
+  }, 0);
+
+  const premiumUsers = userList.reduce((acc, user) => {
+    return acc + user.isPremium;
+  }, 0);
+
+  return {totalUsers: userList.length, totalLogins: totalLogins, premiumCount: premiumUsers, validCount: userList.filter(isValidUser).length, avgLogins: totalLogins / userList.length};
+}
+
+
+console.log(getAccountStats(users));
+
 // ----------------------------------------------------------
 // TASK 7 — promoteUser  [ARROW FUNCTION]
 // ----------------------------------------------------------
@@ -251,6 +266,15 @@ console.log(teens.map(user => user.username));
 // Write a comment: why does mutating user.isPremium inside an
 // arrow function affect the original object?
 // (Hint: objects vs primitives — pass by reference vs value)
+
+const promoteUser = (user) => user.isPremium = true;
+
+console.log(getUserById(users, 2));
+promoteUser(users.find((user) => user.id === 2));
+console.log(getUserById(users, 2));
+
+//Objects in javascript are inherently reference values. Meaning we pass by reference into functions and any changes made inside those functions ultimately edits the original object.
+
 
 // ----------------------------------------------------------
 // TASK 8 — processAccounts  [FUNCTION DECLARATION composing all styles]
@@ -273,6 +297,22 @@ console.log(teens.map(user => user.username));
 // Call processAccounts(users). Log the result.
 // forEach through result.displayList logging each line.
 
+function processAccounts(userList) {
+  const validUsers = userList.filter(isValidUser);
+  const adultUsers = filterByAge(validUsers, 18);
+  const displayList = adultUsers.map(function (user) {
+    return formatUserDisplay(user);
+  });
+  const stats = getAccountStats(userList);
+
+  return { displayList, stats, skipped: userList.length - validUsers.length };
+}
+
+const result = processAccounts(users);
+
+console.log(result);
+result.displayList.forEach((user) => console.log(user));
+
 // ----------------------------------------------------------
 // ⭐ STRETCH GOAL — searchUsers  [FUNCTION EXPRESSION]
 // ----------------------------------------------------------
@@ -288,3 +328,15 @@ console.log(teens.map(user => user.username));
 //   searchUsers(users, "a")               → all with "a" in username
 //
 // Write a comment: why must you use u[field] instead of u.field?
+
+const searchUsers = function (userList, query, field = "username") {
+  return userList.filter(user => user[field].includes(query));
+}
+
+console.log(searchUsers(users, "dev"));
+console.log(searchUsers(users, "email.com", "email"));
+console.log(searchUsers(users, "a"));
+
+
+//The reason we must use bracket notation instead of dot notation for u[field] is because we are looking up the key using a string and the string is a variable
+//Anytime we need to access a key inside an object with a variable, we must use bracket notation. Otherwise a direct access without variables use dot notation.
