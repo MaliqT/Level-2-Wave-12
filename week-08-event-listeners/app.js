@@ -106,10 +106,10 @@ function createTaskCard(task) {
   div1.classList.add("task-meta");
   const prioritySpan = document.createElement("span");
   const assigneeSpan = document.createElement("span");
-  prioritySpan.classList.add("priority");
-  prioritySpan.textContent = `${task.priority.toUpperCase()}`;
+  prioritySpan.classList.add(`priority-${task.priority}`);
+  prioritySpan.textContent = task.priority.toUpperCase();
   assigneeSpan.textContent = `👤 ${task.assignee}`;
-  div1.append(span);
+  div1.append(prioritySpan, assigneeSpan);
 
   const div2 = document.createElement("div");
   const btnComplete = document.createElement("button");
@@ -365,10 +365,27 @@ document.querySelector(".board").addEventListener("click", handleBoardClick);
 // individual listeners on each button?
 
 function handleFilterClick(event) {
-  // your code here
+  const filterValue = event.target.dataset.filter;
+  if (!filterValue) {
+    return;
+  }
+
+  document.querySelectorAll(".filter-btn").forEach((btn) => btn.classList.remove("active"));
+  event.target.classList.add("active");
+
+  document.querySelectorAll(".task-card").forEach((card) => {
+    if (filterValue === "all") {
+      card.classList.remove("hidden");
+    } else if (card.dataset.priority === filterValue) {
+      card.classList.remove("hidden");
+    } else {
+      card.classList.add("hidden");
+    }
+  });
 }
 
 // wire up here
+document.querySelector(".header-right").addEventListener("click", handleFilterClick);
 
 // ----------------------------------------------------------
 // TASK 6 — handleKeyDown (keyboard shortcuts)
@@ -388,10 +405,19 @@ function handleFilterClick(event) {
 // Wire it up to document.
 
 function handleKeyDown(event) {
-  // your code here
+  if (event.key === "Escape") {
+    document.getElementById("task-title-input").textContent = "";
+    document.getElementById("task-assignee-input").textContent = "";
+    console.log("Inputs cleared");
+  }
+
+  if (event.key === "Enter" && event.target.id === "task-title-input") {
+    handleAddTask();
+  }
 }
 
 // wire up here
+document.addEventListener("input", handleKeyDown);
 
 // ----------------------------------------------------------
 // TASK 7 — Connect the dots: init
@@ -402,7 +428,7 @@ function handleKeyDown(event) {
 // Call init() at the bottom.
 
 function init() {
-  // your code here
+  renderBoard(tasks);
 }
 
 // ----------------------------------------------------------
@@ -433,6 +459,23 @@ function init() {
 // WIRE UP ALL LISTENERS (above init)
 // ============================================================
 
+function handleSearch(event) {
+  const searchQuery = event.target.value.toLowerCase().trim();
+  const taskCards = document.querySelectorAll(".task-card");
+
+  taskCards.forEach((card) => {
+    const title = card.querySelector(".task-title").textContent.toLowerCase();
+
+    if (title.includes(searchQuery)) {
+      card.classList.remove("hidden");
+    } else {
+      card.classList.add("hidden");
+    }
+  });
+}
+
+
+document.getElementById("search-input").addEventListener("input", handleSearch);
 // ============================================================
 // START
 // ============================================================

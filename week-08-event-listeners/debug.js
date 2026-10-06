@@ -19,12 +19,13 @@ function logTitle() {
 }
 
 document.getElementById("add-task-btn")
-  .addEventListener("click", logTitle());
+  .addEventListener("click", logTitle);
 
 // What's wrong ↓
+// We are calling the function when assigning it to the event listener instead of passing it
 
 // Your fix ↓
-
+//document.getElementById("add-task-btn").addEventListener("click", logTitle);
 
 // ----------------------------------------------------------
 // 🟡 DEBUG 2 — Medium
@@ -38,7 +39,7 @@ function handleFilter(event) {
   const allCards = document.querySelectorAll(".task-card");
 
   allCards.forEach(function(card) {
-    if (card.dataset.priority !== filter) {
+    if (card.dataset.priority === filter) {
       card.classList.remove("hidden");
     } else {
       card.classList.add("hidden");
@@ -50,9 +51,11 @@ document.querySelector(".header-right")
   .addEventListener("click", handleFilter);
 
 // What's wrong ↓
+// we have card.dataset.priority !== filter which will default to else. 
+// the code is essentially saying high !== high
 
 // Your fix ↓
-
+// card.dataset.priority === filter
 
 // ----------------------------------------------------------
 // 🔴 DEBUG 3 — Hard
@@ -63,7 +66,6 @@ document.querySelector(".header-right")
 
 function handleBoardClick(event) {
   const card   = event.target.closest(".task-card");
-  const taskId = card.dataset.id;
 
   if (event.target.classList.contains("remove-btn")) {
     card.remove();
@@ -74,6 +76,7 @@ document.querySelector(".board")
   .addEventListener("click", handleBoardClick);
 
 // Bug 1 ↓
+// taskId is not being used and isn't necessary for this function
 
 // Bug 2 ↓
 
