@@ -404,7 +404,7 @@ console.log(buildApiUrl("https://jsonplaceholder.typicode.com/posts", {}));
 //
 // Copy the response and paste it below.
 
-const weatherJson = `{}`; // ← replace {} with the real response
+const weatherJson = `{"latitude":40.710335,"longitude":-73.99308,"generationtime_ms":0.22733211517333984,"utc_offset_seconds":0,"timezone":"GMT","timezone_abbreviation":"GMT","elevation":27.0,"current_weather_units":{"time":"iso8601","interval":"seconds","temperature":"°C","windspeed":"km/h","winddirection":"°","is_day":"","weathercode":"wmo code"},"current_weather":{"time":"2026-10-26T19:15","interval":900,"temperature":22.2,"windspeed":14.6,"winddirection":275,"is_day":1,"weathercode":0}}`; // ← replace {} with the real response
 
 // Then:
 // a) Parse it: const weather = JSON.parse(weatherJson)
@@ -432,6 +432,30 @@ const weatherJson = `{}`; // ← replace {} with the real response
 
 // Your code:
 
+const weather = JSON.parse(weatherJson);
+
+console.log(weather.current_weather.temperature);
+console.log(weather.current_weather.windspeed);
+console.log(weather.current_weather.weathercode);
+
+function describeWeather(weatherCode) {
+  if (weatherCode === 0) {
+    console.log("☀️ Clear Skies");
+  } else if (weatherCode >= 1 && weatherCode <= 3) {
+    console.log("⛅ Partly cloudy");
+  } else if (weatherCode >= 3 && weatherCode <= 80) {
+    if (weatherCode >= 45 && weatherCode <= 48) {
+      console.log("🌫️ Foggy");
+    } else {
+      console.log("🌧️ Rain or drizzle");
+    }
+  } else {
+    console.log("⛈️ Stormy")
+  }
+}
+
+console.log(describeWeather(weather.current_weather.weathercode));
+
 // ----------------------------------------------------------
 // TASK 6 — Compare two cities
 // ----------------------------------------------------------
@@ -441,8 +465,8 @@ const weatherJson = `{}`; // ← replace {} with the real response
 //
 // Paste each response below.
 
-const nycWeatherJson = `{}`; // ← NYC response
-const londonWeatherJson = `{}`; // ← London response
+const nycWeatherJson = `{"latitude":40.710335,"longitude":-73.99308,"generationtime_ms":0.22733211517333984,"utc_offset_seconds":0,"timezone":"GMT","timezone_abbreviation":"GMT","elevation":27.0,"current_weather_units":{"time":"iso8601","interval":"seconds","temperature":"°C","windspeed":"km/h","winddirection":"°","is_day":"","weathercode":"wmo code"},"current_weather":{"time":"2026-10-26T19:15","interval":900,"temperature":22.2,"windspeed":14.6,"winddirection":275,"is_day":1,"weathercode":0}}`; // ← NYC response
+const londonWeatherJson = `{"latitude":51.51147,"longitude":-0.13078308,"generationtime_ms":0.1150369644165039,"utc_offset_seconds":0,"timezone":"GMT","timezone_abbreviation":"GMT","elevation":29.0,"current_weather_units":{"time":"iso8601","interval":"seconds","temperature":"°C","windspeed":"km/h","winddirection":"°","is_day":"","weathercode":"wmo code"},"current_weather":{"time":"2026-10-26T19:30","interval":900,"temperature":16.1,"windspeed":19.1,"winddirection":221,"is_day":0,"weathercode":2}}`; // ← London response
 
 // Then:
 // a) Parse both
@@ -452,6 +476,13 @@ const londonWeatherJson = `{}`; // ← London response
 //    "The warmer city is: [city name]"
 //    Use a ternary: nycTemp > londonTemp ? "New York" : "London"
 
+const nycWeather = JSON.parse(nycWeatherJson);
+const londonWeather = JSON.parse(londonWeatherJson);
+
+console.log(`NYC: [${nycWeather.current_weather.temperature}]°C | London: [${londonWeather.current_weather.temperature}]°C`);
+
+console.log(`The warmer city is: ${nycWeather.current_weather.temperature > londonWeather.current_weather.temperature ? "New York" : "London"}`)
+
 // ----------------------------------------------------------
 // TASK 7 — Status code scenario matching
 // ----------------------------------------------------------
@@ -459,22 +490,23 @@ const londonWeatherJson = `{}`; // ← London response
 // AND a brief explanation. Write your answers as comments.
 //
 // Scenario 1: You request /users/9999 but no user has that id.
-// Code + reason:
+// Code + reason: Most likely error to occur would be 404 Not Found
+// Since we are trying to access information or data that does not exist. That's our fault
 //
 // Scenario 2: You try to delete a post but you're not logged in.
-// Code + reason:
+// Code + reason: Error 401 Unauthorized meaning the user is not logged in so there is no valid token. Our fault
 //
 // Scenario 3: You create a new post successfully.
-// Code + reason:
+// Code + reason: 201 is a successful code return meaning that a new resource was created
 //
 // Scenario 4: You send a POST request with a required field missing.
-// Code + reason:
+// Code + reason: Error 400 Bad Request, data was malformed or missing data field. Our fault
 //
 // Scenario 5: You request /posts and get back a list of 100 posts.
-// Code + reason:
+// Code + reason: 200, our request succeeded 
 //
 // Scenario 6: The API database server crashes while processing your request.
-// Code + reason:
+// Code + reason: Error 500 is the clients fault. Error or bug on their side.
 
 // ----------------------------------------------------------
 // TASK 8 — Connect the dots: analyse user posts
@@ -582,7 +614,16 @@ const postsMock = [
 // Call analyseUser(userMock, postsMock)
 
 function analyseUser(user, posts) {
-  // your code here
+  console.log(`=== ${user.name} (@${user.username}) ===`);
+  console.log(`📍 ${user.address.city}`);
+  console.log(`📝 Posts: ${posts.length}`);
+
+  const shortestPost = posts.reduce((shortest, current) => {
+    return current.title.length < shortest.title.length ? current : shortest;
+  });
+
+  console.log(shortestPost.title);
+  posts.forEach((post) => console.log(`  • ${post.title}`));
 }
 
 analyseUser(userMock, postsMock);
@@ -615,7 +656,22 @@ analyseUser(userMock, postsMock);
 // → { base: "https://jsonplaceholder.typicode.com/users", params: {} }
 
 function parseUrl(url) {
-  // your code here
+  if (!url.includes("?")) {
+    return { base: url, params: {} };
+  }
+
+  const splitUrl = url.split("?");
+  const base = splitUrl[0];
+  const queryString = splitUrl[1];
+  const params = {};
+
+  const query = queryString.split("&");
+  query.forEach((q) => {
+    const pair = q.split("=");
+    params[pair[0]] = pair[1];
+  });
+
+  return { base, params };
 }
 
 console.log(

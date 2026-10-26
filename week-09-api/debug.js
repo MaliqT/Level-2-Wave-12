@@ -12,11 +12,13 @@
 const userJson = '{"id":1,"name":"Leanne Graham","address":{"street":"Kulas Light","city":"Gwenborough","zipcode":"92998-3874"}}';
 const user = JSON.parse(userJson);
 
-console.log(user.city); // undefined
+console.log(user.address.city); // undefined
 
 // What's wrong ↓
+// We have nested objects so we're not getting the correct data
 
 // Your fix ↓
+//console.log(user.address.city);
 
 
 // ----------------------------------------------------------
@@ -26,7 +28,7 @@ console.log(user.city); // undefined
 // It outputs "?&userId=1&_limit=5" with a leading & after ?.
 // What's wrong?
 
-function buildQuery(params) {
+/* function buildQuery(params) {
   let query = "?";
   Object.keys(params).forEach(function(key) {
     query += "&" + key + "=" + params[key];
@@ -34,13 +36,30 @@ function buildQuery(params) {
   return query;
 }
 
-console.log(buildQuery({ userId: 1, _limit: 5 }));
+console.log(buildQuery({ userId: 1, _limit: 5 })); */
 // Actual:   "?&userId=1&_limit=5"
 // Expected: "?userId=1&_limit=5"
 
 // What's wrong ↓
+// The & is being initialized before the params even the first one
 
 // Your fix ↓
+function buildQuery(params) {
+  let query = "?";
+  Object.keys(params).forEach(function(key) {
+    if (query.length > 1) {
+      query += "&";
+    }
+
+    query += key + "=" + params[key];
+  });
+
+  return query;
+}
+
+console.log(buildQuery({ userId: 1, _limit: 5}));
+
+// I chose to just add a condition check to see if the length of query is greater than 1 so that we don't add & at the beginning
 
 
 // ----------------------------------------------------------
@@ -53,17 +72,20 @@ console.log(buildQuery({ userId: 1, _limit: 5 }));
 const apiData = JSON.parse('{"status":200,"users":[{"id":1,"name":"Alex","role":"admin"},{"id":2,"name":"Sam","role":"member"}]}');
 
 function displayUsers(data) {
-  console.log("Total users: " + data.length);  // Bug 1
+  console.log("Total users: " + data.users.length);  // Bug 1
 
   data.users.forEach(function(user) {
-    console.log(user.name + " — " + user.Role); // Bug 2
+    console.log(user.name + " — " + user.role); // Bug 2
   });
 }
 
 displayUsers(apiData);
 
 // Bug 1 ↓
+// First bug is poor method use. We are using .length on an object but .length is an array method
+// We need to access the nested object users to use .length
 
 // Bug 2 ↓
+// Just a minor typo. Capitalized R in Role when it should be role lowercase r
 
 // Your fix ↓
